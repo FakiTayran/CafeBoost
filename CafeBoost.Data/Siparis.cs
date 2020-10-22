@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CafeBoost.Data
@@ -15,13 +16,7 @@ namespace CafeBoost.Data
 
         private decimal ToplamTutar()
         {
-            decimal toplamtutar = 0;
-            foreach (var item in SiparisDetaylar)
-            {
-                toplamtutar += item.Tutar();
-            }
-
-            return toplamtutar;
+            return SiparisDetaylar.Sum(x => x.Tutar());
         }
     }
 }
