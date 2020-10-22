@@ -13,6 +13,11 @@ namespace CafeBoost.Data
         public DateTime? KapanisZamani { get; set; }
         public SiparisDurum Durum { get; set; }
         public string ToplamTutarTL { get { return ToplamTutar().ToString() + " ₺"; } }
+        public Siparis()
+        {
+            SiparisDetaylar = new List<SiparisDetay>();
+            AcilisZamani = DateTime.Now;
+        }
 
         private decimal ToplamTutar()
         {
