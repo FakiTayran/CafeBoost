@@ -52,11 +52,11 @@
     <Compile Include="AnaForm.Designer.cs">
       <DependentUpon>AnaForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GecmisSiparisForm.cs">
+    <Compile Include="UrunlerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GecmisSiparisForm.Designer.cs">
-      <DependentUpon>GecmisSiparisForm.cs</DependentUpon>
+    <Compile Include="UrunlerForm.Designer.cs">
+      <DependentUpon>UrunlerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GecmisSiparisler.cs">
       <SubType>Form</SubType>
@@ -75,8 +75,8 @@
     <EmbeddedResource Include="AnaForm.resx">
       <DependentUpon>AnaForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GecmisSiparisForm.resx">
-      <DependentUpon>GecmisSiparisForm.cs</DependentUpon>
+    <EmbeddedResource Include="UrunlerForm.resx">
+      <DependentUpon>UrunlerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GecmisSiparisler.resx">
       <DependentUpon>GecmisSiparisler.cs</DependentUpon>
@@ -89,6 +89,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="SiparisForm.resx">
       <DependentUpon>SiparisForm.cs</DependentUpon>
@@ -105,6 +106,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chair Bos.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chair Dolu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CafeBoost.Data\CafeBoost.Data.csproj">
+      <Project>{BA123EC9-304D-4D4C-9385-E0FDA692B6C3}</Project>
+      <Name>CafeBoost.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
