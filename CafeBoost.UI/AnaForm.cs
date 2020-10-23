@@ -51,7 +51,7 @@ namespace CafeBoost.UI
             #endregion
             #region 1-) Masaların Oluşturulması
             ListViewItem lvi;
-            for (int i = 1; i <= masaAdet; i++)
+            for (int i = 1; i <= db.MasaAdet; i++)
             {
                 lvi = new ListViewItem("Masa " + i);
                 lvi.ImageKey = "bos";
@@ -84,7 +84,7 @@ namespace CafeBoost.UI
                 db.AktifSiparisler.Add(siparis);
                 lvwMasalar.SelectedItems[0].ImageKey = "dolu";
             }
-            SiparisForm frm = new SiparisForm(db,siparis);
+            SiparisForm frm = new SiparisForm(db,siparis,this);
             DialogResult dr = frm.ShowDialog();
 
             //sipariş iptal edildiyse ya da ödme alındıysa
@@ -107,6 +107,21 @@ namespace CafeBoost.UI
             #region Linq Yöntemi
             return db.AktifSiparisler.FirstOrDefault(x => x.MasaNo == masaNo);
             #endregion
+        }
+
+        public void MasaTasi(int kaynak,int hedef)
+        {
+            foreach (ListViewItem lvi in lvwMasalar.Items)
+            {
+                if((int)lvi.Tag == kaynak)
+                {
+                    lvi.ImageKey = "bos";
+                }
+                if ((int)lvi.Tag == hedef)
+                {
+                    lvi.ImageKey = "dolu";
+                }
+            }
         }
     }
 }

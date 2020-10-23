@@ -15,15 +15,19 @@ namespace CafeBoost.UI
     {
         private readonly KafeVeri db;  //readonly değiştirilemez...
         private readonly Siparis siparis;
+        private readonly AnaForm anaForm;
+       
         private readonly BindingList<SiparisDetay> blsiparisDetaylar;
-        public SiparisForm(KafeVeri kafeVeri, Siparis siparis)
+        public SiparisForm(KafeVeri kafeVeri, Siparis siparis ,AnaForm anaForm)
         {
             //constructor parametresi olarak gelen bu nesneleri 
             //daha sonra da erişebileceğimiz field'lara aktarıyoruz
             db = kafeVeri;
             this.siparis = siparis;
+            this.anaForm = anaForm;
             InitializeComponent();
             dgvSiparisDetaylar.AutoGenerateColumns = false;
+            MasalariListele();
             UrunleriListele();
             MasaNoGuncelle();
             blsiparisDetaylar = new BindingList<SiparisDetay>(siparis.SiparisDetaylar);
@@ -31,6 +35,18 @@ namespace CafeBoost.UI
             OdemeTutariGuncelle();
             blsiparisDetaylar.ListChanged += BlsiparisDetaylar_ListChanged;
 
+        }
+
+        private void MasalariListele()
+        {
+            cboMasalar.Items.Clear();
+            for (int i = 0; i <= db.MasaAdet; i++)
+            {
+                if (!db.AktifSiparisler.Any(x=> x.MasaNo == i))
+                {
+                cboMasalar.Items.Add(i);
+                }
+            }
         }
 
         private void BlsiparisDetaylar_ListChanged(object sender, ListChangedEventArgs e)
@@ -104,6 +120,18 @@ namespace CafeBoost.UI
             db.GecmisSiparisler.Add(siparis);
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+        private void btnMasaTasi_Click(object sender, EventArgs e)
+        {
+            if (cboMasalar.SelectedIndex < 0) return;
+            int hedef = (int)cboMasalar.SelectedItem;
+            int kaynak = siparis.MasaNo;
+            siparis.MasaNo = hedef;
+            anaForm.MasaTasi(kaynak, hedef);
+            MasaNoGuncelle();
+            MasalariListele();
+
         }
     }
 }
