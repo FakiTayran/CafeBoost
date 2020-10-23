@@ -55,6 +55,7 @@
     <Compile Include="AnaForm.Designer.cs">
       <DependentUpon>AnaForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MasaTasimaEventArgs.cs" />
     <Compile Include="UrunlerForm.cs">
       <SubType>Form</SubType>
     </Compile>

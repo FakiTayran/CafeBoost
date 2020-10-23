@@ -70,12 +70,18 @@ namespace CafeBoost.UI
                 db.AktifSiparisler.Add(siparis);
                 lvwMasalar.SelectedItems[0].ImageKey = "dolu";
             }
-            SiparisForm frm = new SiparisForm(db,siparis,this);
+            SiparisForm frm = new SiparisForm(db,siparis);
+            frm.MasaTasindi += Frm_MasaTasindi;
             DialogResult dr = frm.ShowDialog();
 
             //sipariş iptal edildiyse ya da ödme alındıysa
             if (dr == DialogResult.OK)
                 lvwMasalar.SelectedItems[0].ImageKey = "bos";
+        }
+
+        private void Frm_MasaTasindi(object sender, MasaTasimaEventArgs e)
+        {
+            MasaTasi(e.EskiMasaNo, e.YeniMasaNo);
         }
 
         private Siparis AktifSiparisBul(int masaNo)
@@ -95,7 +101,7 @@ namespace CafeBoost.UI
             #endregion
         }
 
-        public void MasaTasi(int kaynak,int hedef)
+        private void MasaTasi(int kaynak,int hedef)
         {
             foreach (ListViewItem lvi in lvwMasalar.Items)
             {
@@ -132,5 +138,7 @@ namespace CafeBoost.UI
                 db = new KafeVeri();
             }
         }
+
+       
     }
 }

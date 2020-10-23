@@ -13,18 +13,17 @@ namespace CafeBoost.UI
 {
     public partial class SiparisForm : Form
     {
+        public event EventHandler<MasaTasimaEventArgs> MasaTasindi;
         private readonly KafeVeri db;  //readonly değiştirilemez...
         private readonly Siparis siparis;
-        private readonly AnaForm anaForm;
-       
+
         private readonly BindingList<SiparisDetay> blsiparisDetaylar;
-        public SiparisForm(KafeVeri kafeVeri, Siparis siparis ,AnaForm anaForm)
+        public SiparisForm(KafeVeri kafeVeri, Siparis siparis)
         {
             //constructor parametresi olarak gelen bu nesneleri 
             //daha sonra da erişebileceğimiz field'lara aktarıyoruz
             db = kafeVeri;
             this.siparis = siparis;
-            this.anaForm = anaForm;
             InitializeComponent();
             dgvSiparisDetaylar.AutoGenerateColumns = false;
             MasalariListele();
@@ -42,9 +41,9 @@ namespace CafeBoost.UI
             cboMasalar.Items.Clear();
             for (int i = 0; i <= db.MasaAdet; i++)
             {
-                if (!db.AktifSiparisler.Any(x=> x.MasaNo == i))
+                if (!db.AktifSiparisler.Any(x => x.MasaNo == i))
                 {
-                cboMasalar.Items.Add(i);
+                    cboMasalar.Items.Add(i);
                 }
             }
         }
@@ -128,10 +127,23 @@ namespace CafeBoost.UI
             int hedef = (int)cboMasalar.SelectedItem;
             int kaynak = siparis.MasaNo;
             siparis.MasaNo = hedef;
-            anaForm.MasaTasi(kaynak, hedef);
             MasaNoGuncelle();
             MasalariListele();
 
+            MasaTasimaEventArgs args = new MasaTasimaEventArgs()
+            {
+                EskiMasaNo = kaynak,
+                YeniMasaNo = hedef
+            };
         }
+        protected virtual void MasaTasindiginda(MasaTasimaEventArgs args)
+        {
+            if (MasaTasindi != null)
+            {
+                MasaTasindi(this, args);
+            }
+        }
+
+
     }
 }
