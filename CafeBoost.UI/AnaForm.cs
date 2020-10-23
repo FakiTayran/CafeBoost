@@ -85,7 +85,11 @@ namespace CafeBoost.UI
                 lvwMasalar.SelectedItems[0].ImageKey = "dolu";
             }
             SiparisForm frm = new SiparisForm(db,siparis);
-            frm.ShowDialog();
+            DialogResult dr = frm.ShowDialog();
+
+            //sipariş iptal edildiyse ya da ödme alındıysa
+            if (dr == DialogResult.OK)
+                lvwMasalar.SelectedItems[0].ImageKey = "bos";
         }
 
         private Siparis AktifSiparisBul(int masaNo)
