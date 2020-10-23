@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CafeBoost.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,11 +13,26 @@ namespace CafeBoost.UI
 {
     public partial class GecmisSiparisler : Form
     {
-        public GecmisSiparisler()
+        private readonly KafeVeri db;
+
+        public GecmisSiparisler(KafeVeri kafeVeri)
         {
+            db = kafeVeri;
             InitializeComponent();
+            dgvSiparisler.DataSource = db.GecmisSiparisler;
         }
 
-       
+        private void dgvSiparisler_SelectionChanged(object sender, EventArgs e)
+        {
+            //en az bir seçili satır varsa
+            if (dgvSiparisler.SelectedRows.Count > 0)
+            {
+                //seçili satırlarının ilkinin üzerindeki sipariş nesnesi
+                Siparis seciliSiparis = (Siparis)dgvSiparisler.SelectedRows[0].DataBoundItem;
+                dgvSiparisDetaylar.DataSource = seciliSiparis.SiparisDetaylar;
+            }
+
+
+        }
     }
 }
