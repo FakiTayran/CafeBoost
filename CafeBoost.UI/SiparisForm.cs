@@ -39,7 +39,7 @@ namespace CafeBoost.UI
         private void MasalariListele()
         {
             cboMasalar.Items.Clear();
-            for (int i = 0; i <= db.MasaAdet; i++)
+            for (int i = 1; i <= db.MasaAdet; i++)
             {
                 if (!db.Siparisler.Any(x => x.MasaNo == i && x.Durum == SiparisDurum.Aktif))
                 {
