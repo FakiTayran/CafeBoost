@@ -58,7 +58,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(691, 29);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
-         
             // 
             // tsmiUrunler
             // 

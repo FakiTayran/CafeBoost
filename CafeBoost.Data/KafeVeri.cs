@@ -17,7 +17,6 @@ namespace CafeBoost.Data
             AktifSiparisler = new List<Siparis>();
             GecmisSiparisler = new List<Siparis>();
             //MasaAdet = 20 ;
-
         }
     }
 }

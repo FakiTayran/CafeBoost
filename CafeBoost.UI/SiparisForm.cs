@@ -143,7 +143,5 @@ namespace CafeBoost.UI
                 MasaTasindi(this, args);
             }
         }
-
-
     }
 }

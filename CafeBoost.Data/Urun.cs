@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace CafeBoost.Data
@@ -12,5 +13,6 @@ namespace CafeBoost.Data
         {
             return ($"{UrunAd} ({BirimFiyat}) ₺");
         }
+        public int MyProperty { get; set; }
     }
 }
