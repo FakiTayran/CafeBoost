@@ -29,9 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvUrunler = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clmUrunAd = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clmBirimFiyat = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nudBirimFiyat = new System.Windows.Forms.NumericUpDown();
             this.txtUrunAd = new System.Windows.Forms.TextBox();
             this.btnUrunEkle = new System.Windows.Forms.Button();
@@ -54,30 +55,35 @@
             this.dgvUrunler.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUrunler.ColumnHeadersVisible = false;
             this.dgvUrunler.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2});
+            this.clmUrunAd,
+            this.clmBirimFiyat});
             this.dgvUrunler.Location = new System.Drawing.Point(12, 107);
             this.dgvUrunler.MultiSelect = false;
             this.dgvUrunler.Name = "dgvUrunler";
             this.dgvUrunler.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvUrunler.Size = new System.Drawing.Size(776, 331);
             this.dgvUrunler.TabIndex = 0;
+            this.dgvUrunler.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUrunler_CellValidated);
             this.dgvUrunler.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgvUrunler_CellValidating);
+            this.dgvUrunler.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dgvUrunler_UserDeletingRow);
             // 
-            // Column1
+            // clmUrunAd
             // 
-            this.Column1.DataPropertyName = "UrunAd";
-            this.Column1.HeaderText = "Ürün Adı";
-            this.Column1.Name = "Column1";
+            this.clmUrunAd.DataPropertyName = "UrunAd";
+            this.clmUrunAd.HeaderText = "Ürün Adı";
+            this.clmUrunAd.Name = "clmUrunAd";
             // 
-            // Column2
+            // clmBirimFiyat
             // 
-            this.Column2.DataPropertyName = "BirimFiyat";
-            this.Column2.HeaderText = "Birim Fiyatı";
-            this.Column2.Name = "Column2";
+            this.clmBirimFiyat.DataPropertyName = "BirimFiyat";
+            dataGridViewCellStyle1.Format = "₺0.00";
+            this.clmBirimFiyat.DefaultCellStyle = dataGridViewCellStyle1;
+            this.clmBirimFiyat.HeaderText = "Birim Fiyatı";
+            this.clmBirimFiyat.Name = "clmBirimFiyat";
             // 
             // nudBirimFiyat
             // 
+            this.nudBirimFiyat.DecimalPlaces = 2;
             this.nudBirimFiyat.Location = new System.Drawing.Point(172, 53);
             this.nudBirimFiyat.Name = "nudBirimFiyat";
             this.nudBirimFiyat.Size = new System.Drawing.Size(143, 20);
@@ -105,7 +111,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(21, 30);
+            this.label1.Location = new System.Drawing.Point(43, 30);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(79, 20);
             this.label1.TabIndex = 4;
@@ -115,7 +121,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(206, 30);
+            this.label2.Location = new System.Drawing.Point(181, 30);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(124, 20);
             this.label2.TabIndex = 4;
@@ -156,8 +162,8 @@
         private System.Windows.Forms.Button btnUrunEkle;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clmUrunAd;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clmBirimFiyat;
     }
 }

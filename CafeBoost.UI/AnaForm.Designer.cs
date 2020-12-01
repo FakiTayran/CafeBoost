@@ -17,7 +17,12 @@
             {
                 components.Dispose();
             }
+            if (disposing)
+            {
+                db.Dispose();
+            }
             base.Dispose(disposing);
+            
         }
 
         #region Windows Form Designer generated code
@@ -86,7 +91,6 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "AnaForm";
             this.Text = "AnaForm";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AnaForm_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

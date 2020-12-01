@@ -42,9 +42,6 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -130,7 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CafeBoost.Data\CafeBoost.Data.csproj">
-      <Project>{BA123EC9-304D-4D4C-9385-E0FDA692B6C3}</Project>
+      <Project>{494A3688-3043-4900-9ED2-D4A94F1B09D3}</Project>
       <Name>CafeBoost.Data</Name>
     </ProjectReference>
   </ItemGroup>

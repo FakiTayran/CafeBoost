@@ -14,24 +14,24 @@ namespace CafeBoost.UI
     public partial class SiparisForm : Form
     {
         public event EventHandler<MasaTasimaEventArgs> MasaTasindi;
-        private readonly KafeVeri db;  //readonly değiştirilemez...
+        private readonly CafeBoostContext db;  //readonly değiştirilemez...
         private readonly Siparis siparis;
 
         private readonly BindingList<SiparisDetay> blsiparisDetaylar;
-        public SiparisForm(KafeVeri kafeVeri, Siparis siparis)
+        public SiparisForm(CafeBoostContext CafeBoostContext, Siparis siparis)
         {
             //constructor parametresi olarak gelen bu nesneleri 
             //daha sonra da erişebileceğimiz field'lara aktarıyoruz
-            db = kafeVeri;
+            db = CafeBoostContext;
             this.siparis = siparis;
             InitializeComponent();
             dgvSiparisDetaylar.AutoGenerateColumns = false;
             MasalariListele();
             UrunleriListele();
             MasaNoGuncelle();
-            blsiparisDetaylar = new BindingList<SiparisDetay>(siparis.SiparisDetaylar);
-            dgvSiparisDetaylar.DataSource = blsiparisDetaylar;
             OdemeTutariGuncelle();
+            blsiparisDetaylar = new BindingList<SiparisDetay>(siparis.SiparisDetaylar.ToList());
+            dgvSiparisDetaylar.DataSource = blsiparisDetaylar;
             blsiparisDetaylar.ListChanged += BlsiparisDetaylar_ListChanged;
 
         }
@@ -41,7 +41,7 @@ namespace CafeBoost.UI
             cboMasalar.Items.Clear();
             for (int i = 0; i <= db.MasaAdet; i++)
             {
-                if (!db.AktifSiparisler.Any(x => x.MasaNo == i))
+                if (!db.Siparisler.Any(x => x.MasaNo == i && x.Durum == SiparisDurum.Aktif))
                 {
                     cboMasalar.Items.Add(i);
                 }
@@ -61,7 +61,7 @@ namespace CafeBoost.UI
 
         private void UrunleriListele()
         {
-            cboUrun.DataSource = db.Urunler;
+            cboUrun.DataSource = db.Urunler.ToList();
         }
 
         private void MasaNoGuncelle()
@@ -76,18 +76,34 @@ namespace CafeBoost.UI
             int adet = (int)nudAdet.Value;
             SiparisDetay detay = new SiparisDetay()
             {
+                SiparisId = siparis.Id,
+                UrunId = secilenUrun.Id,
                 UrunAd = secilenUrun.UrunAd,
                 BirimFiyat = secilenUrun.BirimFiyat,
                 Adet = adet
             };
-            blsiparisDetaylar.Add(detay);
+            db.SiparisDetaylar.Add(detay);
+            db.SaveChanges();
+            SiparisDetaylarYenile();
+
         }
+
+        private void SiparisDetaylarYenile()
+        {
+            blsiparisDetaylar.Clear();
+            siparis.SiparisDetaylar.ToList().ForEach(x => blsiparisDetaylar.Add(x));
+        }
+
         private void dgvSiparisDetaylar_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
             DialogResult dr = MessageBox.Show("Seçili detayları silmek istediğinize emin misiniz ?", "Silme Onayı", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
 
             if (dr != DialogResult.Yes)
                 e.Cancel = true;
+
+            SiparisDetay sd = (SiparisDetay)e.Row.DataBoundItem;
+            db.SiparisDetaylar.Remove(sd);
+            db.SaveChanges();
         }
 
         private void btnAnasayfa_Click(object sender, EventArgs e)
@@ -115,8 +131,7 @@ namespace CafeBoost.UI
             siparis.OdenenTutar = odenenTutar;
             siparis.KapanisZamani = DateTime.Now;
             siparis.Durum = siparisDurum;
-            db.AktifSiparisler.Remove(siparis);
-            db.GecmisSiparisler.Add(siparis);
+            db.SaveChanges();
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -127,6 +142,7 @@ namespace CafeBoost.UI
             int hedef = (int)cboMasalar.SelectedItem;
             int kaynak = siparis.MasaNo;
             siparis.MasaNo = hedef;
+            db.SaveChanges();
             MasaNoGuncelle();
             MasalariListele();
 

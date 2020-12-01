@@ -13,13 +13,15 @@ namespace CafeBoost.UI
 {
     public partial class GecmisSiparisler : Form
     {
-        private readonly KafeVeri db;
+        private readonly CafeBoostContext db;
 
-        public GecmisSiparisler(KafeVeri kafeVeri)
+        public GecmisSiparisler(CafeBoostContext CafeBoostContext)
         {
-            db = kafeVeri;
+            db = CafeBoostContext;
             InitializeComponent();
-            dgvSiparisler.DataSource = db.GecmisSiparisler;
+            dgvSiparisDetaylar.AutoGenerateColumns = false;
+            dgvSiparisler.AutoGenerateColumns = false;
+            dgvSiparisler.DataSource = db.Siparisler.Where(x => x.Durum != SiparisDurum.Aktif).ToList();
         }
 
         private void dgvSiparisler_SelectionChanged(object sender, EventArgs e)
@@ -29,9 +31,14 @@ namespace CafeBoost.UI
             {
                 //seçili satırlarının ilkinin üzerindeki sipariş nesnesi
                 Siparis seciliSiparis = (Siparis)dgvSiparisler.SelectedRows[0].DataBoundItem;
-                dgvSiparisDetaylar.DataSource = seciliSiparis.SiparisDetaylar;
+                dgvSiparisDetaylar.DataSource = seciliSiparis.SiparisDetaylar.ToList();
             }
 
+
+        }
+
+        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
+        {
 
         }
     }
